@@ -1,0 +1,15 @@
+version: 2
+
+jobs:
+  build:
+    machine:
+      image: windows-default
+    resource_class: windows.medium
+    steps:
+      - run: env
+      - run: wpr -start GeneralProfile -start CPU -start DiskIO -start FileIO
+      - run: sleep 5
+      - run: start cmd.exe "/c echo CircleCI"
+      - run: wpr -stop ./wpr.etl
+      - store_artifacts:
+          path: ./wpr.etl
